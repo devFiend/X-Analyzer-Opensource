@@ -1,0 +1,57 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/client"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String  @id @default(uuid())
+  xUserId      String  @unique
+  username     String
+  name         String?
+  profileImage String?
+
+  // OAuth Security
+  encryptedAccessToken  String
+  encryptedRefreshToken String
+  tokenExpiry           DateTime
+
+  // Analytics
+  healthScore  Int       @default(0)
+  lastSyncedAt DateTime?
+
+  // Relations
+  snapshots  Snapshot[]
+  actionLogs ActionLog[]
+}
+
+model Snapshot {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  followersCount  Int
+  followingCount  Int
+  nonMutualsCount Int
+  inactiveCount   Int
+
+  // Storing the list of IDs to compare later without hitting X API
+  followingIds String[] // Array of X user IDs
+  followerIds  String[]
+
+  createdAt DateTime @default(now())
+}
+
+model ActionLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  type      String // "UNFOLLOW" or "FOLLOW"
+  targetId  String // The X ID of the person unfollowed
+  status    String // "SUCCESS" or "FAILED"
+  createdAt DateTime @default(now())
+}
