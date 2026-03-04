@@ -37,7 +37,8 @@ export const loginWithX = async (req: Request, res: Response) => {
             code_challenge_method: 'S256',
         });
 
-        res.redirect(`https://twitter.com/i/oauth2/authorize?${queryParams.toString()}`);
+        const authUrl = `https://twitter.com/i/oauth2/authorize?${queryParams.toString().replace(/\+/g, '%20')}`;
+        res.redirect(authUrl);
     } catch (error) {
         console.error('Login Redirect Error:', error);
         res.status(500).json({ error: 'Failed to initiate X login' });
