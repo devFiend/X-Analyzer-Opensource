@@ -117,9 +117,9 @@ export const xCallback = async (req: Request, res: Response) => {
             },
         });
 
-        // 5. Success! Redirect to Frontend (assuming it's on port 3000)
+        // 5. Success! Redirect to Frontend (assuming it's on port 5173)
         // In a real app, you'd set a JWT cookie here.
-        res.redirect(`http://127.0.0.1:3000/dashboard?user=${user.username}`);
+        res.redirect(`http://localhost:5173/dashboard?user=${user.username}`);
 
     } catch (error: any) {
         console.error('Auth Error Detail:', error.response?.data || error.message);

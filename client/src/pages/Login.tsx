@@ -4,7 +4,7 @@ import { LayoutGrid, TrendingUp, Users, Shield } from "lucide-react";
 
 export default function LoginPage() {
     const handleLogin = () => {
-        window.location.href = "http://127.0.0.1:5000/api/auth/x";
+        window.location.href = "http://localhost:5000/api/auth/x";
     };
 
     return (
@@ -108,7 +108,7 @@ export default function LoginPage() {
                 </CardContent>
             </Card>
 
-            <style jsx>{`
+            <style>{`
                 @keyframes float {
                     0% {
                         transform: translateY(0) rotate(0deg);
