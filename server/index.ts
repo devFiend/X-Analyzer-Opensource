@@ -4,6 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import authRoutes from './routes/authRoutes';
+import syncRoutes from './routes/syncRoutes';
 
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json()); // Parse JSON bodies
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/sync', syncRoutes);
 
 // Health Check Route
 app.get('/', (req, res) => {
